@@ -102,7 +102,7 @@ describe("JPetStore", () => {
         storeHelper.clickButton(storeHelper.WORD_REGISTRY.SIGNIN);
         storeHelper.signin(VALID_CREDENTIALS.NAME, VALID_CREDENTIALS.PASSWORD);
     });
-    it.only("add product from menu to cart and make sure it is added ", () => {
+    it("add product from menu to cart and make sure it is added ", () => {
         storeHelper.addProducts([{
                 type: FISH.NAME,
                 name: FISH.ANGEL_FISH,
@@ -120,10 +120,10 @@ describe("JPetStore", () => {
             },
         ]);
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
-        storeHelper.verify1([FISH.LARGE_ANGEL_FISH, CAT.TAILLESS_MAX, DOG.FEMALE_PUPPY_BULL_DOG])
+        storeHelper.verifyProductExistence([FISH.LARGE_ANGEL_FISH, CAT.TAILLESS_MAX, DOG.FEMALE_PUPPY_BULL_DOG])
 
     });
-    it.only("add product from information page for product to cart and make sure it is added", () => {
+    it("add product from information page for product to cart and make sure it is added", () => {
         storeHelper.addProducts([{
                 type: FISH.NAME,
                 name: FISH.ANGEL_FISH,
@@ -141,41 +141,46 @@ describe("JPetStore", () => {
             },
         ], false);
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
-        storeHelper.verify1([FISH.LARGE_ANGEL_FISH, CAT.TAILLESS_MAX, DOG.FEMALE_PUPPY_BULL_DOG])
+        storeHelper.verifyProductExistence([FISH.LARGE_ANGEL_FISH, CAT.TAILLESS_MAX, DOG.FEMALE_PUPPY_BULL_DOG])
     });
-    it("remove product from cart and make sure it is removed", () => {
-        storeHelper.addProducts(
-            [{
-                    type: storeHelper.LOCATORS.fish,
-                    name: FISH.ANGEL_FISH,
-                    Description: FISH.LARGE_ANGEL_FISH,
-                },
-                {
-                    type: storeHelper.LOCATORS.dog,
-                    name: DOG.BULL_DOG,
-                    Description: DOG.FEMALE_PUPPY_BULL_DOG,
-                },
-                {
-                    type: storeHelper.LOCATORS.cat,
-                    name: CAT.MANX,
-                    Description: CAT.TAILLESS_MAX,
-                },
-            ],
-            false
-        );
-        storeHelper.removeFromCart([FISH.LARGE_ANGEL_FISH, DOG.FEMALE_PUPPY_BULL_DOG]);
+    it.only("remove product from cart and make sure it is removed", () => {// bug in (EST-1)
+        storeHelper.addProducts([
+            {
+            type: FISH.NAME,
+            name: FISH.ANGEL_FISH,
+            Description: FISH.SMALL_ANGEL_FISH,
+        },
+        {
+            type: CAT.NAME,
+            name: CAT.MANX,
+            Description: CAT.TAILLESS_MAX,
+        },
+        {
+            type: DOG.NAME,
+            name: DOG.BULL_DOG,
+            Description: DOG.FEMALE_PUPPY_BULL_DOG,
+        },
+    ], false);
+        storeHelper.clickButton(storeHelper.LOCATORS.cart,false)
+        storeHelper.removeFromCart([FISH.SMALL_ANGEL_FISH, DOG.FEMALE_PUPPY_BULL_DOG]);
+        storeHelper.verifyProductExistence([FISH.SMALL_ANGEL_FISH, DOG.FEMALE_PUPPY_BULL_DOG],false)
+    });
+    it('Verify click in "Return to main menu" button and redirect to main page', () => {
 
-    });
-    it('Verify functionality of "Return to main menu" button', () => {
+        // cart->main menu
+        
+        // fish->type->click
+        // click in fish ->clich in type
 
         storeHelper.checkButtonFunctionality(
             storeHelper.WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON
         );
     });
-    it(`Verify functionality of "Return to 'product name'" button`, () => {
+    it(`Verify click in "Return to 'product name'" button and return to product page`, () => {
         storeHelper.checkButtonFunctionality1(storeHelper.LOCATORS.reptiles, REPTILES.IGUANA, "REPTILES");
     });
     it("verify from cart is empty before add any iteam", () => {
+        
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false);
         storeHelper.textExistence(
             storeHelper.WORD_REGISTRY.PRODUCTS_TABLE,
