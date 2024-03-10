@@ -88,13 +88,13 @@ describe("JPetStore", () => {
         storeHelper.clickButton(storeHelper.WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON)
         storeHelper.testbuttonRedirect(storeHelper.WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON);
     });
-    it.only(`verify"Return to 'product name'" button will redirect user to product page`, () => {
+    it(`verify"Return to 'product name'" button will redirect user to product page`, () => {
         storeHelper.clickButton(storeHelper.LOCATORS.reptiles, false);
         storeHelper.clickButton(storeHelper.PRODUCTS.REPTILES.IGUANA_ID);
         storeHelper.clickButton(storeHelper.WORD_REGISTRY.returnProductButton.replace('${name}',storeHelper.PRODUCTS.REPTILES.NAME))
         storeHelper.testbuttonRedirect(storeHelper.PRODUCTS.REPTILES.NAME);
     });
-    it.only("check from total cost", () => {
+    it("check from total cost", () => {
         storeHelper.addProducts(
             [{
                 type: storeHelper.PRODUCTS.FISH.NAME,
