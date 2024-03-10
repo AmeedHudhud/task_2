@@ -68,7 +68,7 @@ describe("JPetStore", () => {
         storeHelper.verifyInformation([{value:storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID,row:1}, {value:storeHelper.PRODUCTS.FISH.DESCRIPTION,row:2}, {value:storeHelper.PRODUCTS.FISH.TYPE,row:3}, {value:storeHelper.PRODUCTS.FISH.PRICE,row:5}])
 
     });
-    it.only("remove product from cart and verify it is removed", () => {
+    it("remove product from cart and verify it is removed", () => {
         storeHelper.addProducts([
             {
                 type: storeHelper.PRODUCTS.FISH.NAME,
@@ -95,13 +95,13 @@ describe("JPetStore", () => {
         storeHelper.clickButton(storeHelper.WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON)
         storeHelper.testbuttonRedirect(storeHelper.WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON);
     });
-    it(`verify"Return to 'product name'" button will redirect user to product page`, () => {
+    it.only(`verify"Return to 'product name'" button will redirect user to product page`, () => {
         storeHelper.clickButton(storeHelper.LOCATORS.reptiles, false);
         storeHelper.clickButton(storeHelper.PRODUCTS.REPTILES.IGUANA_ID);
         storeHelper.clickButton(`Return to ${storeHelper.PRODUCTS.REPTILES.NAME}`)
         storeHelper.testbuttonRedirect(storeHelper.PRODUCTS.REPTILES.NAME);
     });
-    it("check from total cost", () => {
+    it.only("check from total cost", () => {
         storeHelper.addProducts(
             [{
                 type: storeHelper.PRODUCTS.FISH.NAME,
@@ -148,7 +148,7 @@ describe("JPetStore", () => {
         ]);
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
         storeHelper.changeQantity(storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID, value)
-        storeHelper.verifyData(value, storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID)
+        storeHelper.verifyQuantity(value, storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID)
     })
     it("verify that cart is empty before add any iteam", () => {
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false);

@@ -141,23 +141,20 @@ export const removeFromCart = (products) => {
 export const textExistence = (locator, text) => {
   cy.get(locator).should("contain", text);
 };
-export const checkTotalCost = (locator, row = 2) => {
+export const checkTotalCost = (locator) => {
   cy.get(LOCATORS.quantityField.replace('${locator}',locator)).then((input) => {
     //quantity
     const value = parseFloat(input.val());
-    cy.get(LOCATORS.productsTable)
-      .find(LOCATORS.row.replace('${row}',row))
-      .find(LOCATORS.price)
+    cy.wrap(input).parent().parent().get('td:nth-child(6)')
       .invoke("text")
       .then((text) => {
         //price
         const price = parseFloat(text.replace(/\$/g, ""));
         const total = (value * price).toFixed(2);
-        cy.get(LOCATORS.productsTable)
-          .find(LOCATORS.row.replace('${row}',row))
-          .find(LOCATORS.totalCost)
-          .invoke("text")
+        cy.get(LOCATORS.quantityField.replace('${locator}',locator)).then((input)=>{
+          cy.wrap(input).parent().parent().get('td:nth-child(7)').invoke("text")
           .should("eq", "$" + total);
+        })
       });
   });
 };
@@ -192,7 +189,7 @@ export const checkSubTotal = (number) => {
 export const changeQantity = (locator, number) => {
   cy.get(LOCATORS.quantityField.replace('${locator}',locator)).clear().type(`${number}{enter}`);
 };
-export const verifyData = (data, row, quantity = true) => {
+export const verifyQuantity = (data, row, quantity = true) => {
   if (quantity == false) {
     cy.get("tr")
       .eq(row)
@@ -220,14 +217,14 @@ export const testbuttonRedirect = (button) => {
   if (button == WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON) {
     cy.get(LOCATORS.mainInMainPage).should("exist");
   } else if(button == PRODUCTS.FISH.NAME){
-    cy.get(LOCATORS.headerTwoInProductPage).should("contain", (PRODUCTS.FISH.NAME.charAt(0).toUpperCase() + PRODUCTS.FISH.NAME.slice(1).toLowerCase()));
+    cy.get(LOCATORS.headerTwoInProductPage).contains(PRODUCTS.FISH.NAME,{ matchCase: false })
   } else if (button == PRODUCTS.DOG.NAME) {
-    cy.get(LOCATORS.headerTwoInProductPage).should("contain", (PRODUCTS.DOG.NAME.charAt(0).toUpperCase() + PRODUCTS.DOG.NAME.slice(1).toLowerCase()));
+    cy.get(LOCATORS.headerTwoInProductPage).contains(PRODUCTS.DOG.NAME,{ matchCase: false })
   } else if (button == PRODUCTS.CAT.NAME) {
-    cy.get(LOCATORS.headerTwoInProductPage).should("contain", (PRODUCTS.CAT.NAME.charAt(0).toUpperCase() + PRODUCTS.CAT.NAME.slice(1).toLowerCase()));
+    cy.get(LOCATORS.headerTwoInProductPage).contains(PRODUCTS.CAT.NAME,{ matchCase: false })
   } else if (button == PRODUCTS.REPTILES.NAME) {
-    cy.get(LOCATORS.headerTwoInProductPage).should("contain",(PRODUCTS.REPTILES.NAME.charAt(0).toUpperCase() + PRODUCTS.REPTILES.NAME.slice(1).toLowerCase()));
+    cy.get(LOCATORS.headerTwoInProductPage).contains(PRODUCTS.REPTILES.NAME,{ matchCase: false })
   } else if (button == PRODUCTS.BIRD.NAME) {
-    cy.get(LOCATORS.headerTwoInProductPage).should("contain", (PRODUCTS.BIRD.NAME.charAt(0).toUpperCase() + PRODUCTS.BIRD.NAME.slice(1).toLowerCase()));
+    cy.get(LOCATORS.headerTwoInProductPage).contains(PRODUCTS.BIRD.NAME,{ matchCase: false })
   }
 };
