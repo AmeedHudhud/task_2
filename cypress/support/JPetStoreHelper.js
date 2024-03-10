@@ -30,7 +30,8 @@ export const WORD_REGISTRY = {
   ADD_TO_CART_BUTTON: "Add to Cart",
   RETURN_TO_MAIN_PAGE_BUTTON: "Return to Main Menu",
   subTotal: 'Sub Total:',
-  REMOVE: 'Remove'
+  REMOVE: 'Remove',
+  returnProductButton: 'Return to ${name}'
 };
 export const PRODUCTS = {
   FISH : {

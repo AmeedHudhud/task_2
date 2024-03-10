@@ -11,13 +11,6 @@ const INVALID_CREDENTIALS = {
     PASSWORD: "12345",
 };
 const value = '10'
-
-// it.only('test',()=>{
-//     let text = 'QQQ'
-//     cy.log(PRODUCTS.FISH.charAt(0).toUpperCase() + PRODUCTS.FISH.slice(1).toLowerCase())
-// })
-
-
 describe("JPetStore", () => {
     beforeEach(() => {
         cy.visit("https://petstore.octoperf.com/actions/Catalog.action");
@@ -98,7 +91,7 @@ describe("JPetStore", () => {
     it.only(`verify"Return to 'product name'" button will redirect user to product page`, () => {
         storeHelper.clickButton(storeHelper.LOCATORS.reptiles, false);
         storeHelper.clickButton(storeHelper.PRODUCTS.REPTILES.IGUANA_ID);
-        storeHelper.clickButton(`Return to ${storeHelper.PRODUCTS.REPTILES.NAME}`)
+        storeHelper.clickButton(storeHelper.WORD_REGISTRY.returnProductButton.replace('${name}',storeHelper.PRODUCTS.REPTILES.NAME))
         storeHelper.testbuttonRedirect(storeHelper.PRODUCTS.REPTILES.NAME);
     });
     it.only("check from total cost", () => {
