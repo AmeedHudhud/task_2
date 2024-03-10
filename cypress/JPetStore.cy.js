@@ -11,6 +11,13 @@ const INVALID_CREDENTIALS = {
     PASSWORD: "12345",
 };
 const value = '10'
+
+// it.only('test',()=>{
+//     let text = 'QQQ'
+//     cy.log(PRODUCTS.FISH.charAt(0).toUpperCase() + PRODUCTS.FISH.slice(1).toLowerCase())
+// })
+
+
 describe("JPetStore", () => {
     beforeEach(() => {
         cy.visit("https://petstore.octoperf.com/actions/Catalog.action");
@@ -46,7 +53,7 @@ describe("JPetStore", () => {
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
         storeHelper.verifyProductExistence([{val:storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID,isExist:true}])
         storeHelper.clickButton(storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID,true)
-        storeHelper.verifyInformation(storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID, storeHelper.PRODUCTS.FISH.DESCRIPTION, storeHelper.PRODUCTS.FISH.TYPE, storeHelper.PRODUCTS.FISH.PRICE)
+        storeHelper.verifyInformation([{value:storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID,row:1}, {value:storeHelper.PRODUCTS.FISH.DESCRIPTION,row:2}, {value:storeHelper.PRODUCTS.FISH.TYPE,row:3}, {value:storeHelper.PRODUCTS.FISH.PRICE,row:5}])
     });
     it("add product from menu to cart and verify it is added ", () => {
         storeHelper.addProducts([{
@@ -58,9 +65,10 @@ describe("JPetStore", () => {
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
         storeHelper.verifyProductExistence([{val:storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID,isExist:true}])
         storeHelper.clickButton(storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID,true)
-        storeHelper.verifyInformation(storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID, storeHelper.PRODUCTS.FISH.DESCRIPTION, storeHelper.PRODUCTS.FISH.TYPE, storeHelper.PRODUCTS.FISH.PRICE)
+        storeHelper.verifyInformation([{value:storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID,row:1}, {value:storeHelper.PRODUCTS.FISH.DESCRIPTION,row:2}, {value:storeHelper.PRODUCTS.FISH.TYPE,row:3}, {value:storeHelper.PRODUCTS.FISH.PRICE,row:5}])
+
     });
-    it("remove product from cart and verify it is removed", () => {// bug in (EST-1)
+    it.only("remove product from cart and verify it is removed", () => {
         storeHelper.addProducts([
             {
                 type: storeHelper.PRODUCTS.FISH.NAME,
@@ -82,12 +90,12 @@ describe("JPetStore", () => {
         storeHelper.removeFromCart([storeHelper.PRODUCTS.FISH.SMALL_ANGEL_FISH_ID, storeHelper.PRODUCTS.DOG.FEMALE_PUPPY_BULL_DOG_ID]);
         storeHelper.verifyProductExistence([{val:storeHelper.PRODUCTS.FISH.SMALL_ANGEL_FISH_ID,isExist:false},{val:storeHelper.PRODUCTS.DOG.FEMALE_PUPPY_BULL_DOG_ID,isExist:false}])
     });
-    it.only('verify "Retuen to main menu" button will redirect user to main page', () => {
+    it('verify "Retuen to main menu" button will redirect user to main page', () => {
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
         storeHelper.clickButton(storeHelper.WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON)
         storeHelper.testbuttonRedirect(storeHelper.WORD_REGISTRY.RETURN_TO_MAIN_PAGE_BUTTON);
     });
-    it.only(`verify"Return to 'product name'" button will redirect user to product page`, () => {
+    it(`verify"Return to 'product name'" button will redirect user to product page`, () => {
         storeHelper.clickButton(storeHelper.LOCATORS.reptiles, false);
         storeHelper.clickButton(storeHelper.PRODUCTS.REPTILES.IGUANA_ID);
         storeHelper.clickButton(`Return to ${storeHelper.PRODUCTS.REPTILES.NAME}`)
@@ -129,7 +137,7 @@ describe("JPetStore", () => {
         },
         ], false);
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
-        storeHelper.checkSubTotal()
+        storeHelper.checkSubTotal(3)
     })
     it('edit quantity and verify it is modified', () => {
         storeHelper.addProducts([{
@@ -144,7 +152,7 @@ describe("JPetStore", () => {
     })
     it("verify that cart is empty before add any iteam", () => {
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false);
-        storeHelper.textExistence(storeHelper.LOCATORS.PRODUCTS_TABLE, storeHelper.MESSAGE.EMPTY_MESSAGE);
+        storeHelper.textExistence(storeHelper.LOCATORS.productsTable, storeHelper.MESSAGE.EMPTY_MESSAGE);
     });
     it('verify that cost change when change quantity', () => {
         storeHelper.addProducts([{
@@ -171,7 +179,7 @@ describe("JPetStore", () => {
         ]);
         storeHelper.clickButton(storeHelper.LOCATORS.cart, false)
         storeHelper.removeFromCart([storeHelper.PRODUCTS.FISH.LARGE_ANGEL_FISH_ID, storeHelper.PRODUCTS.CAT.TAILLESS_MAX_ID]);
-        storeHelper.textExistence(storeHelper.LOCATORS.PRODUCTS_TABLE, storeHelper.MESSAGE.EMPTY_MESSAGE);
+        storeHelper.textExistence(storeHelper.LOCATORS.productsTable, storeHelper.MESSAGE.EMPTY_MESSAGE);
 
     })
 });
